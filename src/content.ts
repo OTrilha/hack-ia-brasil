@@ -11,6 +11,7 @@ export const EVENT = {
   hoursLabel: "8h às 18h",
   venue: "ONDER",
   address: "R. Manoel Gualberto, 255, Miramar, João Pessoa",
+  mapsUrl: "https://share.google/I8Q9B6vuIZ3KEXMjA",
   who: "Brasileiros de 12 a 25 anos, de qualquer lugar",
   cost: "Gratuito",
   partners: ["IA Brasil Fellowship", "Trilha", "Cognition"],
