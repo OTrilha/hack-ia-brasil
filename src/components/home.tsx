@@ -24,13 +24,12 @@ const T = {
     sub: "Dez horas. Um problema difícil. O foco é achar pessoas, não só projetos.",
     cta: "Quero participar",
     countdown: "dias · horas · min · seg",
-    backedBy: "parceria",
     facts: [
       ["quando", "28 nov · 8h–18h"],
       ["onde", "R. Manoel Gualberto, 255, Miramar"],
       ["quem", "12 a 25 anos"],
       ["custo", "Gratuito"],
-      ["parceria", ""],
+      ["powered by", ""],
     ],
     prizeLabel: "o que está em jogo",
     prizeH2: ["O vencedor", "pula a fila", "da fellowship."],
@@ -44,7 +43,7 @@ const T = {
     faqLabel: "perguntas",
     signupLabel: "inscrições",
     signupH2: ["Inscrições", "abertas."],
-    signupLine: "28.11 · 8h–18h · Miramar, João Pessoa",
+    signupLine: "28.11 · 8h–18h · Medway João Pessoa",
     signupBtn: "Inscrever-se",
     aboutFellowship: "conheça a IA Brasil Fellowship ↗",
     aboutTrilha: "conheça o Trilha ↗",
@@ -59,13 +58,12 @@ const T = {
     sub: "Ten hours. One hard problem. We're looking for people, not just projects.",
     cta: "Count me in",
     countdown: "days · hours · min · sec",
-    backedBy: "partners",
     facts: [
       ["when", "Nov 28 · 8am–6pm"],
       ["where", "R. Manoel Gualberto, 255, Miramar"],
       ["who", "Ages 12 to 25"],
       ["cost", "Free"],
-      ["partners", ""],
+      ["powered by", ""],
     ],
     prizeLabel: "what's at stake",
     prizeH2: ["The winner", "skips the line", "for the fellowship."],
@@ -79,7 +77,7 @@ const T = {
     faqLabel: "questions",
     signupLabel: "applications",
     signupH2: ["Applications", "open."],
-    signupLine: "11.28 · 8am–6pm · Miramar, João Pessoa",
+    signupLine: "11.28 · 8am–6pm · Medway João Pessoa",
     signupBtn: "Apply",
     aboutFellowship: "about the IA Brasil Fellowship ↗",
     aboutTrilha: "about Trilha ↗",
@@ -151,7 +149,7 @@ export function Home({ lang }: { lang: Lang }) {
       <ClickDots />
       {/* HERO */}
       <section data-scene="0" data-side="left" className="relative h-[100svh] min-h-[620px] overflow-hidden">
-        <header className="absolute inset-x-0 top-0 z-10 mx-auto flex max-w-6xl items-center justify-between px-8 py-7 md:grid md:grid-cols-[1fr_auto_1fr] md:px-20 lg:px-32">
+        <header className="absolute inset-x-0 top-0 z-10 mx-auto flex max-md:hidden max-w-6xl items-center justify-between px-8 py-7 md:grid md:grid-cols-[1fr_auto_1fr] md:px-20 lg:px-32">
           <span className="font-mono text-xs uppercase tracking-[0.28em] text-white/90">Hack IA Brasil</span>
           <nav className="hidden gap-10 font-mono text-xs uppercase tracking-[0.28em] text-white/75 md:flex">
             <a href="#dia" className="transition-colors hover:text-white">{t.nav[0]}</a>
@@ -185,7 +183,7 @@ export function Home({ lang }: { lang: Lang }) {
             <span className="font-normal text-white">{t.h1[3]}</span>
           </motion.h1>
           <motion.p
-            className="mt-8 text-sm leading-relaxed text-white/80 md:whitespace-nowrap"
+            className="mt-8 text-sm leading-relaxed text-white/80 max-md:hidden md:whitespace-nowrap"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 1 }}
@@ -223,32 +221,24 @@ export function Home({ lang }: { lang: Lang }) {
             </div>
             <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/75">{t.countdown}</span>
           </div>
-          <div className="flex flex-col gap-3 border-l border-white/15 pl-10 max-[900px]:items-center max-[900px]:border-l-0 max-[900px]:pl-0">
-            <div className="flex items-center gap-5 text-sm">
-              <PartnerLogo href={EVENT.cognitionUrl} logo="/cognition.svg" name="Cognition" w={15} />
-              <PartnerLogo href={EVENT.devinUrl} logo="/devin.svg" name="Devin" w={15} />
-              <PartnerLogo href={EVENT.trilhaUrl} logo="/montanha.svg" name="Trilha" w={20} />
-            </div>
-            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/75">{t.backedBy}</span>
-          </div>
           </motion.div>
         </div>
       </section>
 
       {/* FACTS */}
       <section data-scene="0" data-side="left" className="border-y border-white/[0.06]">
-        <dl className="mx-auto grid max-w-6xl grid-cols-2 max-[900px]:text-center px-8 md:grid-cols-[1fr_1.7fr_0.9fr_0.9fr_1.1fr] md:px-20 lg:px-32">
+        <dl className="mx-auto grid max-w-6xl grid-cols-2 max-[900px]:text-center px-8 md:grid-cols-[auto_auto_auto_auto_auto] md:justify-between md:px-20 lg:px-32">
           {t.facts.map(([k, v], i) => (
             <div
               key={k}
               className={`border-white/[0.06] py-7 ${i % 2 ? "pl-6" : ""} ${i ? "md:border-l md:pl-6" : ""} ${i % 2 ? "border-l" : ""} ${
                 i > 1 ? "border-t md:border-t-0" : ""
-              }`}
+              } ${i === t.facts.length - 1 ? "max-md:col-span-2 max-md:pl-0" : ""}`}
             >
               <dt className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/75">{k}</dt>
               <dd className="mt-2 text-sm text-white/90">
                 {i === t.facts.length - 1 ? (
-                  <span className="inline-flex flex-wrap items-center gap-x-2.5 gap-y-1.5 max-[900px]:justify-center">
+                  <span className="inline-flex items-center gap-x-2.5 whitespace-nowrap max-[900px]:justify-center">
                     <a href={EVENT.fellowshipUrl} target="_blank" rel="noreferrer" className="underline decoration-white/25 underline-offset-4 transition-colors hover:decoration-white">
                       IA Brasil
                     </a>
@@ -257,6 +247,10 @@ export function Home({ lang }: { lang: Lang }) {
                     <span className="text-white/50">×</span>
                     <PartnerLogo href={EVENT.cognitionUrl} logo="/cognition.svg" name="Cognition" w={15} />
                   </span>
+                ) : i === 1 ? (
+                  <a href={EVENT.mapsUrl} target="_blank" rel="noreferrer" className="underline md:whitespace-nowrap decoration-white/25 underline-offset-4 transition-colors hover:decoration-white">
+                    <Scramble text={v} trigger="hover" />
+                  </a>
                 ) : (
                   <Scramble text={v} trigger="hover" />
                 )}
@@ -267,7 +261,7 @@ export function Home({ lang }: { lang: Lang }) {
       </section>
 
       {/* DAY */}
-      <section data-scene="2" data-side="right" id="dia" className="mx-auto max-w-6xl px-8 py-36 max-[900px]:pt-[44svh] max-[900px]:text-center md:px-20 lg:px-32 min-[901px]:!pl-[34%]">
+      <section data-scene="2" data-side="right" id="dia" className="mx-auto max-w-6xl px-8 py-36 max-[900px]:pt-[44svh] max-[900px]:pb-16 max-[900px]:text-center md:px-20 lg:px-32 min-[901px]:!pl-[34%]">
         <Label>{t.dayLabel}</Label>
         <Reveal>
           <h2 className="mt-6 text-2xl font-extralight md:text-4xl">08:00 — 18:00</h2>
@@ -278,14 +272,14 @@ export function Home({ lang }: { lang: Lang }) {
       </section>
 
       {/* PRIZE */}
-      <section data-scene="1" data-side="left" id="premio" className="mx-auto max-w-6xl px-8 py-36 max-[900px]:pt-[44svh] max-[900px]:text-center md:px-20 lg:px-32 min-[901px]:!pr-[34%]">
+      <section data-scene="1" data-side="left" id="premio" className="mx-auto max-w-6xl px-8 py-36 max-[900px]:pt-[44svh] max-[900px]:pb-16 max-[900px]:text-center md:px-20 lg:px-32 min-[901px]:!pr-[34%]">
         <Label>{t.prizeLabel}</Label>
         <Reveal>
           <h2 className="mx-auto mt-6 max-w-2xl text-2xl font-extralight leading-tight md:text-4xl">
             {t.prizeH2[0]}{" "}
             <mark className="bg-[#FFFFFF] px-[0.08em] text-[#000928]">{t.prizeH2[1]}</mark> {t.prizeH2[2]}
           </h2>
-          <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-white/80">
+          <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-white/80 max-md:hidden">
             {t.prizeP[0]}{" "}
             <a
               href={EVENT.fellowshipUrl}
@@ -310,7 +304,7 @@ export function Home({ lang }: { lang: Lang }) {
                   <Scramble text={p.title} trigger="hover" />
                 </h3>
                 <p className="mt-1 text-sm text-white/80">{p.sub}</p>
-                <p className="mt-4 text-sm leading-relaxed text-white/75 transition-colors duration-500 group-hover:text-white/90">
+                <p className="mt-4 text-sm leading-relaxed text-white/75 transition-colors duration-500 group-hover:text-white/90 max-md:hidden">
                   {p.body}
                 </p>
               </article>
@@ -321,13 +315,13 @@ export function Home({ lang }: { lang: Lang }) {
 
       {/* WHO */}
       <section data-scene="3" data-side="right" className="border-y border-white/[0.06]">
-        <div className="mx-auto flex min-h-[100svh] max-w-6xl items-center px-8 py-32 max-[900px]:items-end max-[900px]:pt-[44svh] max-[900px]:text-center md:px-20 lg:px-32 min-[901px]:!pl-[34%]">
+        <div className="mx-auto flex min-h-[100svh] max-w-6xl items-center px-8 py-32 max-[900px]:min-h-0 max-[900px]:items-end max-[900px]:pt-[44svh] max-[900px]:pb-16 max-[900px]:text-center md:px-20 lg:px-32 min-[901px]:!pl-[34%]">
           <Reveal>
             <Label>{t.whoLabel}</Label>
             <h2 className="mt-6 text-2xl font-extralight leading-tight md:text-3xl">
               {t.whoH2}
             </h2>
-            <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-white/80">
+            <p className="mx-auto mt-5 max-w-md text-sm leading-relaxed text-white/80 max-md:hidden">
               {t.whoP}
             </p>
           </Reveal>
@@ -335,7 +329,7 @@ export function Home({ lang }: { lang: Lang }) {
       </section>
 
       {/* PEOPLE */}
-      <section data-scene="4" data-side="left" id="quem" className="mx-auto max-w-6xl px-8 py-36 max-[900px]:pt-[44svh] max-[900px]:text-center md:px-20 lg:px-32 min-[901px]:!pr-[34%]">
+      <section data-scene="4" data-side="left" id="quem" className="mx-auto max-w-6xl px-8 py-36 max-[900px]:pt-[44svh] max-[900px]:pb-16 max-[900px]:text-center md:px-20 lg:px-32 min-[901px]:!pr-[34%]">
         <Label>{t.peopleLabel}</Label>
         <div className="mt-14 grid gap-16">
           {PEOPLE.map((p, i) => (
@@ -360,7 +354,7 @@ export function Home({ lang }: { lang: Lang }) {
 
       {/* FAQ */}
       <section data-scene="5" data-side="right" className="border-t border-white/[0.06]">
-        <div className="mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-8 py-36 max-[900px]:justify-end max-[900px]:pt-[44svh] md:px-20 lg:px-32 min-[901px]:!pl-[34%]">
+        <div className="mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-center px-8 py-36 max-[900px]:min-h-0 max-[900px]:justify-end max-[900px]:pt-[44svh] max-[900px]:pb-16 md:px-20 lg:px-32 min-[901px]:!pl-[34%]">
           <div className="max-[900px]:text-center"><Label>{t.faqLabel}</Label></div>
           <div className="mt-10 border-t border-white/[0.06]">
             <Accordion
@@ -381,7 +375,12 @@ export function Home({ lang }: { lang: Lang }) {
             {t.signupH2[0]} <span className="text-[#FFFFFF]">{t.signupH2[1]}</span>
           </h2>
           <p className="mt-6 font-mono text-xs uppercase leading-relaxed tracking-[0.3em] text-white/75">
-            {t.signupLine}
+            {t.signupLine.split(" · ").map((part, i) => (
+              <span key={part}>
+                {i > 0 && " · "}
+                <span className="whitespace-nowrap">{part}</span>
+              </span>
+            ))}
           </p>
           <a
             href={signup}
@@ -389,7 +388,7 @@ export function Home({ lang }: { lang: Lang }) {
           >
             {t.signupBtn}
           </a>
-          <div className="mt-16 flex flex-wrap justify-center gap-x-8 gap-y-3 text-[12px] tracking-[0.15em] text-white/75">
+          <div className="mt-16 flex flex-wrap justify-center gap-x-8 gap-y-3 max-md:hidden text-[12px] tracking-[0.15em] text-white/75">
             <a href={EVENT.fellowshipUrl} target="_blank" rel="noreferrer" className="transition-colors hover:text-white">
               {t.aboutFellowship}
             </a>
@@ -403,6 +402,13 @@ export function Home({ lang }: { lang: Lang }) {
         </div>
         <footer className="mx-auto flex max-w-6xl flex-wrap justify-between max-[900px]:justify-center max-[900px]:text-center gap-4 border-t border-white/[0.06] px-8 py-8 font-mono text-[11px] uppercase tracking-[0.28em] text-white/75 md:px-20 lg:px-32">
           <span>© 2026 Hack IA Brasil</span>
+          <a
+            href={localePath(lang === "en" ? "pt" : "en", "/")}
+            hrefLang={lang === "en" ? "pt-BR" : "en"}
+            className="transition-colors hover:text-white md:hidden"
+          >
+            {t.switchLabel}
+          </a>
           <a href={EVENT.fellowshipUrl} target="_blank" rel="noreferrer" className="transition-colors hover:text-white">
             iabrasil.com ↗
           </a>
