@@ -50,6 +50,8 @@ export const FORM = {
     challengeHint: (team: boolean) =>
       `Isto não é o projeto do hackathon: o tema só é revelado na abertura, e ninguém vai precisar defender esta ideia no dia. Queremos entender como ${team ? "vocês pensam" : "você pensa"} um problema com senso crítico. Para quem é? Por que importa? Como ${team ? "vocês saberiam" : "você saberia"} que a solução funcionou?`,
     role: "Que papel você quer ter num time e o que você traz?",
+    roleHint:
+      "Queremos saber em quais áreas você tem mais domínio e poderia ajudar o time: backend, frontend, banco de dados, design, marketing, publicidade, apresentação, gestão... Pode ser algo que você já faz ou que está aprendendo.",
     send: { title: "Quase lá", note: "Confira e deslize para enviar." },
     available: (team: boolean) =>
       `Confirmo que ${team ? "todo o time está disponível" : "estou disponível"} no sábado, 28/11, das 8h às 18h, em João Pessoa.`,
@@ -123,6 +125,8 @@ export const FORM = {
     challengeHint: () =>
       "This is not the hackathon project: the theme is only revealed at the opening, and no one will have to defend this idea on the day. We want to see how you think critically about a problem. Who is it for? Why does it matter? How would you know the solution worked?",
     role: "What role do you want on a team, and what do you bring?",
+    roleHint:
+      "Tell us which areas you know best and could help a team with: backend, frontend, databases, design, marketing, advertising, pitching, project management... It can be something you already do or are still learning.",
     send: { title: "Almost there", note: "Check everything and slide to send." },
     available: (team: boolean) =>
       `I confirm that ${team ? "the whole team is" : "I am"} available on Saturday, Nov 28, from 8am to 6pm, in João Pessoa.`,
