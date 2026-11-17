@@ -89,8 +89,8 @@ function termoEmail(g, termoUrl) {
       "das 8h às 18h, na R. Manoel Gualberto, 255, Miramar, João Pessoa.\n\n" +
       "Como " + g.minor + " tem menos de 18 anos, precisamos da sua autorização para a participação e o uso de imagem. " +
       "O termo está aqui:\n" + termoUrl + "\n\n" +
-      "Dá para preencher os campos digitando no próprio PDF. Você pode assinar de graça pelo gov.br (assinador.iti.br) ou à mão. Responda a este e-mail com o termo assinado " +
-      "ou entregue a versão impressa no credenciamento, às 8h. Sem o termo, não conseguimos liberar a entrada.\n\n" +
+      "Dá para preencher os campos digitando no próprio PDF. Você pode assinar de graça pelo gov.br (assinador.iti.br) ou à mão. Responda a este e-mail com o PDF assinado " +
+      "ou com uma foto do termo assinado à mão. Sem o termo, não conseguimos liberar a entrada.\n\n" +
       "Qualquer dúvida, é só responder.\n\nEquipe Hack IA Brasil",
   };
 }
