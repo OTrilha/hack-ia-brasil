@@ -329,6 +329,7 @@ export function ApplicationForm({ lang = "pt", header }: { lang?: Lang; header?:
               {!isTeam && (
                 <Area
                   label={t.role}
+                  hint={t.roleHint}
                   value={a.role}
                   onChange={(v) => set({ role: v })}
                   max={500}
