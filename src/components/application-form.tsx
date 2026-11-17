@@ -218,7 +218,7 @@ export function ApplicationForm({ lang = "pt", header }: { lang?: Lang; header?:
                   <Input
                     label={t.whatsapp}
                     type="tel"
-                    pattern={a.me.country === "55" ? "9?[0-9]{4}[\\s\\-]?[0-9]{4}" : "[0-9\\s\\-]{4,14}"}
+                    pattern={a.me.country === "55" ? "9?[0-9]{4}[\\s\\-]?[0-9]{4}" : "[0-9\\s\\-]{6,14}"}
                     placeholder="99999-9999"
                     value={a.me.whatsapp}
                     onChange={(v) => setMe({ whatsapp: v })}
