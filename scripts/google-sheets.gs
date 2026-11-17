@@ -39,13 +39,12 @@ function json(o) {
 }
 
 /**
- * Guardian consent, sent only to approved applications.
+ * Guardian consent, sent to the guardians of every application with a minor (no approval needed).
  *
  * Setup: add a script property TERMO_URL with a link to the consent form (participation + image use),
  * e.g. a PDF in Google Drive shared as "anyone with the link can view".
- * Use: type "aprovado" in the `status` column of the approved rows, then
- * menu Hack IA → "Enviar termos aos responsáveis". Rows already sent get a date in `termos_enviados_em`
- * and are skipped next time, so the menu can be run again after each round of approvals.
+ * Use: menu Hack IA → "Enviar termos aos responsáveis". Rows already sent get a date in `termos_enviados_em`
+ * and are skipped next time.
  * Automatic: menu Hack IA → "Ligar envio automático" (once) checks every 10 minutes and sends on its own.
  * E-mails go out from the account that turned it on.
  */
@@ -60,7 +59,7 @@ function onOpen() {
 function ligarEnvioAutomatico() {
   desligarEnvioAutomatico(true);
   ScriptApp.newTrigger("enviarTermosPendentes").timeBased().everyMinutes(10).create();
-  SpreadsheetApp.getUi().alert("Envio automático ligado: a planilha confere a cada 10 minutos as linhas com status \"aprovado\".");
+  SpreadsheetApp.getUi().alert("Envio automático ligado: a planilha confere a cada 10 minutos as inscrições novas.");
 }
 
 function desligarEnvioAutomatico(quiet) {
@@ -85,9 +84,10 @@ function termoEmail(g, termoUrl) {
     subject: "Hack IA Brasil: autorização para " + g.minor,
     body:
       "Olá, " + g.guardian + ".\n\n" +
-      g.minor + " foi selecionado(a) para o Hack IA Brasil, um hackathon gratuito no sábado, 28 de novembro, " +
+      g.minor + " se inscreveu no Hack IA Brasil, um hackathon gratuito no sábado, 28 de novembro, " +
       "das 8h às 18h, na R. Manoel Gualberto, 255, Miramar, João Pessoa.\n\n" +
       "Como " + g.minor + " tem menos de 18 anos, precisamos da sua autorização para a participação e o uso de imagem. " +
+      "A seleção ainda vai acontecer: enviando o termo agora, ele já fica pronto caso " + g.minor + " seja selecionado(a). " +
       "O termo está aqui:\n" + termoUrl + "\n\n" +
       "Dá para preencher os campos digitando no próprio PDF. Você pode assinar de graça pelo gov.br (assinador.iti.br) ou à mão. Responda a este e-mail com o PDF assinado " +
       "ou com uma foto do termo assinado à mão. Sem o termo, não conseguimos liberar a entrada.\n\n" +
@@ -106,7 +106,7 @@ function enviarTermos() {
   }
 }
 
-/** Sends to guardians of approved rows not sent yet. Runs from the menu and from the 10-minute trigger. */
+/** Sends to guardians of every application not sent yet. Runs from the menu and from the 10-minute trigger. */
 function enviarTermosPendentes() {
   var termoUrl = PropertiesService.getScriptProperties().getProperty("TERMO_URL");
   if (!termoUrl) throw new Error("Falta a propriedade TERMO_URL nas configurações do script.");
@@ -117,8 +117,6 @@ function enviarTermosPendentes() {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
     var data = sheet.getDataRange().getValues();
     var headers = data[0];
-    var statusCol = headers.indexOf("status");
-    if (statusCol === -1) throw new Error('Crie uma coluna "status" e escreva "aprovado" nas linhas aprovadas.');
     var sentCol = headers.indexOf("termos_enviados_em");
     if (sentCol === -1) {
       sentCol = headers.length;
@@ -127,12 +125,12 @@ function enviarTermosPendentes() {
 
     var sent = 0;
     for (var r = 1; r < data.length; r++) {
-      if (String(data[r][statusCol]).trim().toLowerCase() !== "aprovado" || data[r][sentCol]) continue;
+      if (data[r][sentCol]) continue;
       var row = {};
       headers.forEach(function (h, i) { row[h] = data[r][i]; });
       var guardians = guardiansOf(row);
       guardians.forEach(function (g) { MailApp.sendEmail(termoEmail(g, termoUrl)); });
-      // also marks approved rows with no minors, so they aren't checked again
+      // also marks rows with no minors, so they aren't checked again
       sheet.getRange(r + 1, sentCol + 1).setValue(guardians.length ? new Date() : "sem menores");
       SpreadsheetApp.flush();
       sent += guardians.length;
