@@ -46,9 +46,28 @@ function json(o) {
  * Use: type "aprovado" in the `status` column of the approved rows, then
  * menu Hack IA → "Enviar termos aos responsáveis". Rows already sent get a date in `termos_enviados_em`
  * and are skipped next time, so the menu can be run again after each round of approvals.
+ * Automatic: menu Hack IA → "Ligar envio automático" (once) checks every 10 minutes and sends on its own.
+ * E-mails go out from the account that turned it on.
  */
 function onOpen() {
-  SpreadsheetApp.getUi().createMenu("Hack IA").addItem("Enviar termos aos responsáveis", "enviarTermos").addToUi();
+  SpreadsheetApp.getUi().createMenu("Hack IA")
+    .addItem("Enviar termos aos responsáveis", "enviarTermos")
+    .addItem("Ligar envio automático", "ligarEnvioAutomatico")
+    .addItem("Desligar envio automático", "desligarEnvioAutomatico")
+    .addToUi();
+}
+
+function ligarEnvioAutomatico() {
+  desligarEnvioAutomatico(true);
+  ScriptApp.newTrigger("enviarTermosPendentes").timeBased().everyMinutes(10).create();
+  SpreadsheetApp.getUi().alert("Envio automático ligado: a planilha confere a cada 10 minutos as linhas com status \"aprovado\".");
+}
+
+function desligarEnvioAutomatico(quiet) {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === "enviarTermosPendentes") ScriptApp.deleteTrigger(t);
+  });
+  if (quiet !== true) SpreadsheetApp.getUi().alert("Envio automático desligado.");
 }
 
 var PEOPLE = ["", "m2_", "m3_", "m4_"]; // column prefixes written by /api/inscricao
@@ -70,38 +89,56 @@ function termoEmail(g, termoUrl) {
       "das 8h às 18h, na R. Manoel Gualberto, 255, Miramar, João Pessoa.\n\n" +
       "Como " + g.minor + " tem menos de 18 anos, precisamos da sua autorização para a participação e o uso de imagem. " +
       "O termo está aqui:\n" + termoUrl + "\n\n" +
-      "Você pode assinar de graça pelo gov.br (assinador.iti.br) ou à mão. Responda a este e-mail com o termo assinado " +
+      "Dá para preencher os campos digitando no próprio PDF. Você pode assinar de graça pelo gov.br (assinador.iti.br) ou à mão. Responda a este e-mail com o termo assinado " +
       "ou entregue a versão impressa no credenciamento, às 8h. Sem o termo, não conseguimos liberar a entrada.\n\n" +
       "Qualquer dúvida, é só responder.\n\nEquipe Hack IA Brasil",
   };
 }
 
+/** Menu: sends now and shows the result. */
 function enviarTermos() {
   var ui = SpreadsheetApp.getUi();
+  try {
+    var sent = enviarTermosPendentes();
+    ui.alert(sent + " e-mail(s) enviados. Cota diária do Gmail: " + MailApp.getRemainingDailyQuota() + " restantes.");
+  } catch (err) {
+    ui.alert(err.message);
+  }
+}
+
+/** Sends to guardians of approved rows not sent yet. Runs from the menu and from the 10-minute trigger. */
+function enviarTermosPendentes() {
   var termoUrl = PropertiesService.getScriptProperties().getProperty("TERMO_URL");
-  if (!termoUrl) return ui.alert("Falta a propriedade TERMO_URL nas configurações do script.");
+  if (!termoUrl) throw new Error("Falta a propriedade TERMO_URL nas configurações do script.");
 
-  var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
-  var data = sheet.getDataRange().getValues();
-  var headers = data[0];
-  var statusCol = headers.indexOf("status");
-  if (statusCol === -1) return ui.alert('Crie uma coluna "status" e escreva "aprovado" nas linhas aprovadas.');
-  var sentCol = headers.indexOf("termos_enviados_em");
-  if (sentCol === -1) {
-    sentCol = headers.length;
-    sheet.getRange(1, sentCol + 1).setValue("termos_enviados_em");
-  }
+  var lock = LockService.getScriptLock(); // menu and trigger at the same time would send twice
+  lock.waitLock(30000);
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
+    var data = sheet.getDataRange().getValues();
+    var headers = data[0];
+    var statusCol = headers.indexOf("status");
+    if (statusCol === -1) throw new Error('Crie uma coluna "status" e escreva "aprovado" nas linhas aprovadas.');
+    var sentCol = headers.indexOf("termos_enviados_em");
+    if (sentCol === -1) {
+      sentCol = headers.length;
+      sheet.getRange(1, sentCol + 1).setValue("termos_enviados_em");
+    }
 
-  var sent = 0;
-  for (var r = 1; r < data.length; r++) {
-    if (String(data[r][statusCol]).trim().toLowerCase() !== "aprovado" || data[r][sentCol]) continue;
-    var row = {};
-    headers.forEach(function (h, i) { row[h] = data[r][i]; });
-    var guardians = guardiansOf(row);
-    guardians.forEach(function (g) { MailApp.sendEmail(termoEmail(g, termoUrl)); });
-    // also marks approved rows with no minors, so they aren't checked again
-    sheet.getRange(r + 1, sentCol + 1).setValue(guardians.length ? new Date() : "sem menores");
-    sent += guardians.length;
+    var sent = 0;
+    for (var r = 1; r < data.length; r++) {
+      if (String(data[r][statusCol]).trim().toLowerCase() !== "aprovado" || data[r][sentCol]) continue;
+      var row = {};
+      headers.forEach(function (h, i) { row[h] = data[r][i]; });
+      var guardians = guardiansOf(row);
+      guardians.forEach(function (g) { MailApp.sendEmail(termoEmail(g, termoUrl)); });
+      // also marks approved rows with no minors, so they aren't checked again
+      sheet.getRange(r + 1, sentCol + 1).setValue(guardians.length ? new Date() : "sem menores");
+      SpreadsheetApp.flush();
+      sent += guardians.length;
+    }
+    return sent;
+  } finally {
+    lock.releaseLock();
   }
-  ui.alert(sent + " e-mail(s) enviados. Cota diária do Gmail: " + MailApp.getRemainingDailyQuota() + " restantes.");
 }
