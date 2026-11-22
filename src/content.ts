@@ -5,8 +5,8 @@ export const EVENT = {
   // Saturday, 28 Nov 2026, 08:00 in João Pessoa (UTC-3)
   start: "2026-11-28T08:00:00-03:00",
   end: "2026-11-28T18:00:00-03:00",
-  // applications close at the end of Saturday 21 Nov; the form and /api/inscricao both check it
-  signupDeadline: "2026-11-21T23:59:59-03:00",
+  // applications close at the end of Thursday 26 Nov; the form and /api/inscricao both check it
+  signupDeadline: "2026-11-26T23:59:59-03:00",
   dateLabel: "Sábado, 28 de novembro",
   hoursLabel: "8h às 18h",
   venue: "ONDER",

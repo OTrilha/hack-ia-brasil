@@ -68,7 +68,7 @@ export const FORM = {
     closed: {
       label: "inscrições encerradas",
       title: "As inscrições fecharam.",
-      body: "Recebemos inscrições até sábado, 21/11, às 23h59. Se você se inscreveu, o resultado chega por e-mail.",
+      body: "Recebemos inscrições até quinta, 26/11, às 23h59. Se você se inscreveu, o resultado chega por e-mail.",
     },
     sent: {
       label: "inscrição recebida",
@@ -143,7 +143,7 @@ export const FORM = {
     closed: {
       label: "applications closed",
       title: "Applications are closed.",
-      body: "We took applications until Saturday, Nov 21, at 11:59pm (Brasília time). If you applied, the result will arrive by e-mail.",
+      body: "We took applications until Thursday, Nov 26, at 11:59pm (Brasília time). If you applied, the result will arrive by e-mail.",
     },
     sent: {
       label: "application received",
