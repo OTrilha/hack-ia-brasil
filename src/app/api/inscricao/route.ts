@@ -53,7 +53,9 @@ export async function POST(req: Request) {
     return Response.json({ error: "JSON inválido" }, { status: 400 });
   }
   if (!isObj(a) || !isObj(a.me)) return Response.json({ error: "Formato inválido" }, { status: 400 });
-  if (a.website) return Response.json({ ok: true }); // bot: pretend it worked
+  // honeypot: a filled "website" usually means a bot, but browser/password-manager autofill can fill it for real
+  // people too, so never drop the application: save it and flag the row for triage instead
+  const suspectBot = typeof a.website === "string" && a.website.trim() !== "";
   const rawMembers = (a as { team?: { members?: unknown } }).team?.members;
   const shapeOk =
     !badTypes(a.me, [...PERSON_KEYS, "country", "ddd", "whatsapp", "city", "uf"]) &&
@@ -102,6 +104,7 @@ export async function POST(req: Request) {
     papel_no_time: isTeam ? "" : a.role,
     como_soube: a.source,
     idioma: a.lang === "en" ? "en" : "pt",
+    suspeita_bot: suspectBot ? "sim" : "",
   };
   for (let i = 0; i < MAX_OTHERS; i++) {
     Object.assign(row, personCols(members[i] ?? ({} as Person), `m${i + 2}_`));
