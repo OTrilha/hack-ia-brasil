@@ -64,6 +64,7 @@ export function ApplicationForm({ lang = "pt", header }: { lang?: Lang; header?:
           ...d,
           me: { ...base.me, ...d.me },
           team: { ...base.team, ...d.team, members: (d.team?.members ?? base.team.members).map((m: Person) => ({ ...emptyPerson(), ...m })) },
+          website: "", // an autofilled honeypot must not survive in the saved draft
         });
       }
     } catch {}
@@ -148,9 +149,14 @@ export function ApplicationForm({ lang = "pt", header }: { lang?: Lang; header?:
       {/* honeypot: hidden from people, bots fill it */}
       <input
         type="text"
-        name="website"
+        // neutral name + ignore hints so browser autofill and password managers leave it empty
+        name="hp_nao_preencher"
         tabIndex={-1}
         autoComplete="off"
+        data-1p-ignore
+        data-lpignore="true"
+        data-bwignore
+        data-form-type="other"
         aria-hidden
         className="absolute -left-[9999px] h-0 w-0 opacity-0"
         value={a.website}
