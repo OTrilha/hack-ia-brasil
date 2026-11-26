@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
       {
         source: "/guia",
         destination:
-          "https://hackiabrasil.notion.site/Guia-do-Participante-Hack-IA-Brasil-424145f3410e8062b3f6d8f6c2d3f1c6",
+          "https://hackiabrasil.notion.site/Deck-do-participante-Hack-IA-Brasil-424145f3410e8062b3f6d8f6c2d3f1c6",
         permanent: false,
       },
     ];
