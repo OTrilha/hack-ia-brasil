@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { useRef, useSyncExternalStore } from "react";
+import { useRef, useSyncExternalStore, type ReactNode } from "react";
 import type { Rich as RichT } from "@/guide/content";
 import { RollingDigits } from "@/components/fx/rolling-digits";
 import { dotRipple } from "@/components/fx/click-dots";
@@ -89,12 +89,15 @@ export function Checklist({
   items,
   variant = "plain",
   doneLabel = "tudo pronto",
+  extras,
 }: {
   id: string;
   items: RichT[];
   /** plain: one line each. lead: bold lead on its own line. numbered: big index + lead. */
   variant?: "plain" | "lead" | "numbered";
   doneLabel?: string;
+  /** Extra content under an item's text, keyed by item index (e.g. a download link). */
+  extras?: Record<number, ReactNode>;
 }) {
   const { checked, toggle } = useChecks(id);
   const reduce = useReducedMotion();
@@ -194,6 +197,7 @@ export function Checklist({
                   <span className={lead.length > 0 ? "mt-0.5 block text-[14px] md:text-[15px]" : ""}>
                     <Rich rich={body} />
                   </span>
+                  {extras?.[i] && <span className="mt-3 block">{extras[i]}</span>}
                 </span>
               </label>
             </li>
