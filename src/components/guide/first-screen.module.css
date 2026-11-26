@@ -1,0 +1,39 @@
+/* CSS entrance for the section that sits right under a page hero.
+ * Starts at first paint (no JS), right after the hero's lead (hero.module.css
+ * settles at ~1.0s; this begins at 300ms so the two overlap like one motion).
+ * --d is the per-element stagger set by <Rise> inside <FirstScreen>. */
+
+.first {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --first-base: 300ms;
+}
+
+.first [data-enter] {
+  animation: enter 600ms var(--ease-out) both;
+  animation-delay: calc(var(--first-base) + var(--d, 0ms));
+}
+
+/* Played once: <Activity> hiding/showing the page must not replay it. */
+.done [data-enter] {
+  animation: none;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+    filter: blur(4px);
+  }
+}
+
+@keyframes fade-only {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .first [data-enter] {
+    animation-name: fade-only;
+  }
+}
