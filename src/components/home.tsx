@@ -18,11 +18,11 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const T = {
   pt: {
     nav: ["Dia", "Prêmio", "Quem"],
-    apply: "Inscreva-se",
+    apply: "Inscrições",
     switchLabel: "EN",
     h1: ["Um hackathon em", "João Pessoa", "pode ser o seu caminho para o", "Vale do Silício."],
     sub: "Dez horas. Um problema difícil. O foco é achar pessoas, não só projetos.",
-    cta: "Quero participar",
+    cta: "Guia do participante",
     countdown: "dias · horas · min · seg",
     facts: [
       ["quando", "28 nov · 8h–18h"],
@@ -42,9 +42,9 @@ const T = {
     peopleLabel: "quem está por trás",
     faqLabel: "perguntas",
     signupLabel: "inscrições",
-    signupH2: ["Inscrições", "abertas."],
+    signupH2: ["Inscrições", "encerradas."],
     signupLine: "28.11 · 8h–18h · Medway João Pessoa",
-    signupBtn: "Inscrever-se",
+    signupBtn: "Guia do participante",
     aboutFellowship: "conheça a IA Brasil Fellowship ↗",
     aboutTrilha: "conheça o Trilha ↗",
     aboutDevin: "conheça o Devin, da Cognition ↗",
@@ -52,11 +52,11 @@ const T = {
   },
   en: {
     nav: ["Day", "Prize", "People"],
-    apply: "Apply",
+    apply: "Applications",
     switchLabel: "PT",
     h1: ["A hackathon in", "João Pessoa", "could be your path to", "Silicon Valley."],
     sub: "Ten hours. One hard problem. We're looking for people, not just projects.",
-    cta: "Count me in",
+    cta: "Participant guide",
     countdown: "days · hours · min · sec",
     facts: [
       ["when", "Nov 28 · 8am–6pm"],
@@ -76,9 +76,9 @@ const T = {
     peopleLabel: "who's behind it",
     faqLabel: "questions",
     signupLabel: "applications",
-    signupH2: ["Applications", "open."],
+    signupH2: ["Applications", "closed."],
     signupLine: "11.28 · 8am–6pm · Medway João Pessoa",
-    signupBtn: "Apply",
+    signupBtn: "Participant guide",
     aboutFellowship: "about the IA Brasil Fellowship ↗",
     aboutTrilha: "about Trilha ↗",
     aboutDevin: "about Devin, by Cognition ↗",
@@ -197,7 +197,7 @@ export function Home({ lang }: { lang: Lang }) {
             transition={{ delay: 1.2, duration: 1 }}
           >
             <a
-              href={signup}
+              href={EVENT.guideUrl}
               className="inline-flex items-center bg-[#FFFFFF] px-7 py-3.5 text-xs font-semibold tracking-[0.3em] text-[#000928] transition-[filter] duration-300 hover:brightness-110"
             >
               {t.cta}
@@ -383,7 +383,7 @@ export function Home({ lang }: { lang: Lang }) {
             ))}
           </p>
           <a
-            href={signup}
+            href={EVENT.guideUrl}
             className="mt-12 inline-flex items-center bg-[#FFFFFF] px-7 py-3.5 font-mono text-xs font-semibold uppercase tracking-[0.3em] text-[#000928] transition-[filter] duration-300 hover:brightness-110"
           >
             {t.signupBtn}

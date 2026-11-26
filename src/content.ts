@@ -5,8 +5,6 @@ export const EVENT = {
   // Saturday, 28 Nov 2026, 08:00 in João Pessoa (UTC-3)
   start: "2026-11-28T08:00:00-03:00",
   end: "2026-11-28T18:00:00-03:00",
-  // applications close at the end of Thursday 26 Nov; the form and /api/inscricao both check it
-  signupDeadline: "2026-11-26T23:59:59-03:00",
   dateLabel: "Sábado, 28 de novembro",
   hoursLabel: "8h às 18h",
   venue: "ONDER",
@@ -16,7 +14,9 @@ export const EVENT = {
   cost: "Gratuito",
   partners: ["IA Brasil Fellowship", "Trilha", "Cognition"],
   coords: { lat: "7°09′S", lon: "34°47′W" },
+  // applications closed on Thu 26 Nov; this page now only says so
   signupUrl: "/inscricao",
+  guideUrl: "/guia",
   fellowshipUrl: "https://iabrasil.com/",
   trilhaUrl: "https://www.otrilha.com",
   cognitionUrl: "https://cognition.ai",
