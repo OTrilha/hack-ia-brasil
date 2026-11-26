@@ -37,6 +37,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="pt-BR"
+      // html is scroll-behavior: smooth (globals.css); this tells Next to jump, not glide, on route changes
+      data-scroll-behavior="smooth"
       className={[geistMono, oxanium]
         .map((f) => f.variable)
         .join(" ")}
