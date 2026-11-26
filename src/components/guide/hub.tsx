@@ -6,6 +6,23 @@ import { Rich } from "./rich";
 import { GuideSection, Kicker, Lead, Note } from "./ui";
 import { PAGES, clean, items, plain, rich, section, splitLead, splitTitle, table, type PageKey } from "./data";
 
+/** Download for the guardian's authorization template, shown under the minors checklist item. */
+function MinorsTemplate() {
+  return (
+    <a
+      href="/guia/autorizacao-menores.docx"
+      download="Autorização-para-menores.docx"
+      className="group/dl inline-flex items-center gap-2.5 rounded-full border border-white/15 py-1.5 pl-2 pr-3.5 font-mono text-[11px] uppercase tracking-[0.2em] text-white/75 transition-[border-color,color,transform] duration-200 ease-out hover:border-white/50 hover:text-white active:scale-[0.97] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/60"
+    >
+      <svg aria-hidden viewBox="0 0 16 16" className="size-3.5 transition-transform duration-200 ease-out group-hover/dl:translate-y-px" fill="none" stroke="currentColor" strokeWidth={1.4} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" />
+      </svg>
+      baixar modelo
+      <span className="text-white/40">.docx</span>
+    </a>
+  );
+}
+
 /** /guia: intro, checklist, the event in short, then the two doors. */
 export function GuideHub() {
   const intro = section("intro").blocks;
@@ -13,6 +30,8 @@ export function GuideHub() {
   const evento = section("evento").blocks;
   const facts = table(evento[0]);
   const factRows = [facts.head, ...facts.rows];
+  const todo = items(checklist[0]);
+  const minorsAt = todo.findIndex((it) => plain(it).startsWith("Menores de 18 anos"));
 
   return (
     <main className="mx-auto max-w-6xl px-5 pb-20 md:px-10 md:pb-24 lg:px-16">
@@ -42,7 +61,7 @@ export function GuideHub() {
 
         <GuideSection id="checklist" className="mt-16 md:mt-28 lg:col-start-1 lg:row-start-2">
           <Rise y={12} className="mt-8">
-            <Checklist id="antes" items={items(checklist[0])} />
+            <Checklist id="antes" items={todo} extras={minorsAt >= 0 ? { [minorsAt]: <MinorsTemplate /> } : undefined} />
           </Rise>
         </GuideSection>
 
