@@ -52,7 +52,7 @@ export const PRIZES = [
 
 export const SCHEDULE = [
   { t: "08:00", what: "Credenciamento e café", where: "Entrada" },
-  { t: "09:00", what: "Abertura e tema", where: "Auditório" },
+  { t: "09:00", what: "Abertura", where: "Auditório" },
   { t: "09:30", what: "Hacking", where: "Pátio e salas" },
   { t: "12:30", what: "Almoço", where: "Cantina" },
   { t: "16:30", what: "Pitches", where: "Auditório" },
@@ -134,7 +134,7 @@ export const PRIZES_EN = [
 
 export const SCHEDULE_EN = [
   { t: "08:00", what: "Check-in and coffee", where: "Entrance" },
-  { t: "09:00", what: "Opening and theme", where: "Auditorium" },
+  { t: "09:00", what: "Opening", where: "Auditorium" },
   { t: "09:30", what: "Hacking", where: "Courtyard and rooms" },
   { t: "12:30", what: "Lunch", where: "Cafeteria" },
   { t: "16:30", what: "Pitches", where: "Auditorium" },
