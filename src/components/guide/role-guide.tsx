@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { EVENT } from "@/content";
+import { EVENT, STAFF_SCHEDULE } from "@/content";
 import { GuideHero } from "./hero";
 import { GuideShell } from "./shell";
 
@@ -31,16 +31,36 @@ export function RoleGuide({ role, title, lead, feature, children }: RoleGuidePro
             meta={EVENT.dateLabel + " · João Pessoa"}
             title={title}
             after={
-              <a href="#etapas" className="group inline-flex items-center gap-3 rounded-sm font-mono text-[11px] uppercase tracking-[0.18em] text-white/80 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4">
-                <span aria-hidden className="grid size-8 place-items-center rounded-full border border-white/25 motion-safe:transition-transform motion-safe:group-hover:translate-y-0.5">↓</span>
-                {role === "mentor" ? "Como mentorar" : "Etapas da avaliação"}
-              </a>
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+                <a href="#etapas" className="group inline-flex items-center gap-3 rounded-sm font-mono text-[11px] uppercase tracking-[0.18em] text-white/80 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4">
+                  <span aria-hidden className="grid size-8 place-items-center rounded-full border border-white/25 motion-safe:transition-transform motion-safe:group-hover:translate-y-0.5">↓</span>
+                  {role === "mentor" ? "Como mentorar" : "Etapas da avaliação"}
+                </a>
+                <a href="#cronograma-do-dia" className="rounded-sm text-sm text-white/75 underline decoration-white/30 underline-offset-4 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4">
+                  Cronograma do dia
+                </a>
+              </div>
             }
             lead={<p className="max-w-[37ch] text-pretty text-[17px] leading-relaxed text-white/75 md:text-lg">{lead}</p>}
           />
           <div className="min-w-0 lg:pt-20">{feature}</div>
         </div>
         <div id="etapas" className="scroll-mt-16">{children}</div>
+        <section id="cronograma-do-dia" aria-labelledby="titulo-cronograma-do-dia" className="scroll-mt-16 border-t border-white/15 py-10 md:py-14">
+          <h2 id="titulo-cronograma-do-dia" className="font-mono text-xs uppercase tracking-[0.25em] text-white/70">Cronograma do dia</h2>
+          <p className="mt-4 text-4xl font-extralight tracking-tight md:text-5xl">
+            {STAFF_SCHEDULE[0].t} – {STAFF_SCHEDULE[STAFF_SCHEDULE.length - 1].t}
+          </p>
+          <ol className="mt-7 border-l border-white/20 md:mt-10">
+            {STAFF_SCHEDULE.map(({ t, what, where }) => (
+              <li key={t} className="-ml-px grid grid-cols-[4rem_1fr] items-baseline gap-x-3 border-l border-transparent py-2.5 pl-4 first:border-white hover:border-white md:grid-cols-[5rem_1fr_auto] md:gap-x-5 md:py-3 md:pl-6">
+                <time dateTime={t} className="row-span-2 font-mono text-sm tabular-nums text-white/75 md:row-span-1">{t}</time>
+                <span className="text-base md:text-lg">{what}</span>
+                <span className="col-start-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/60 md:col-start-3">{where}</span>
+              </li>
+            ))}
+          </ol>
+        </section>
       </main>
     </GuideShell>
   );

@@ -50,15 +50,20 @@ export const PRIZES = [
   },
 ];
 
-export const SCHEDULE = [
-  { t: "08:00", what: "Credenciamento e café", where: "Entrada" },
-  { t: "09:00", what: "Abertura", where: "Auditório" },
-  { t: "09:30", what: "Hacking", where: "Pátio e salas" },
-  { t: "12:30", what: "Almoço", where: "Cantina" },
-  { t: "16:30", what: "Pitches", where: "Auditório" },
-  { t: "17:30", what: "Júri e prêmios", where: "Auditório" },
-  { t: "18:00", what: "Encerramento", where: "Auditório" },
-];
+function eventSchedule(opening: string, pitchTime: string) {
+  return [
+    { t: "08:00", what: "Credenciamento e café", where: "Entrada" },
+    { t: "09:00", what: opening, where: "Auditório" },
+    { t: "09:30", what: "Hacking", where: "Pátio e salas" },
+    { t: "12:30", what: "Almoço", where: "Cantina" },
+    { t: pitchTime, what: "Pitches", where: "Auditório" },
+    { t: "17:30", what: "Júri e prêmios", where: "Auditório" },
+    { t: "18:00", what: "Encerramento", where: "Auditório" },
+  ];
+}
+
+export const SCHEDULE = eventSchedule("Abertura", "16:30");
+export const STAFF_SCHEDULE = eventSchedule("Abertura e tema", "17:00");
 
 export const FIELDS = [
   "Software",
