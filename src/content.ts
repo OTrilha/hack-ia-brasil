@@ -1,3 +1,5 @@
+import { rounds } from "@/guide/mentoria";
+
 // Single source of truth for event copy — every variant reads from here.
 
 export const EVENT = {
@@ -63,7 +65,22 @@ function eventSchedule(opening: string, pitchTime: string) {
 }
 
 export const SCHEDULE = eventSchedule("Abertura", "16:30");
-export const STAFF_SCHEDULE = eventSchedule("Abertura e tema", "17:00");
+const visitMinutes = 10;
+const mentorshipEvents = rounds.flatMap(({ period, slots }) => {
+  const [hour, minute] = slots[slots.length - 1].time.split(":").map(Number);
+  const endMinutes = hour * 60 + minute + visitMinutes;
+  const endTime = [Math.floor(endMinutes / 60), endMinutes % 60]
+    .map((part) => String(part).padStart(2, "0"))
+    .join(":");
+  const label = `das mentorias da ${period.toLowerCase()}`;
+  return [
+    { t: slots[0].time, what: `Início ${label}`, where: "Mesas dos grupos" },
+    { t: endTime, what: `Fim ${label}`, where: "Mesas dos grupos" },
+  ];
+});
+
+export const STAFF_SCHEDULE = [...eventSchedule("Abertura e tema", "17:00"), ...mentorshipEvents]
+  .sort((a, b) => a.t.localeCompare(b.t));
 
 export const FIELDS = [
   "Software",
