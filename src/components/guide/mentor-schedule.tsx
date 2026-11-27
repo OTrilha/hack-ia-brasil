@@ -61,7 +61,7 @@ export function MentorSchedule() {
           <dl className="mt-2 divide-y divide-white/10 text-sm">
             {assignments.map(([key, group]) => (
               <div key={key} className="grid grid-cols-[5rem_1fr] gap-3 py-2">
-                <dt className="text-white/70">Grupo {group}{group === 20 && <small className="block">Individuais</small>}</dt>
+                <dt className="text-white/70">Grupo {group}</dt>
                 <dd>{mentorPairs[key]}</dd>
               </div>
             ))}
