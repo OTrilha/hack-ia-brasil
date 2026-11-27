@@ -19,7 +19,7 @@ export function MentorSchedule() {
       <h2 id="titulo-cronograma" className="text-2xl font-light tracking-tight">Escala de mentoria</h2>
       <label htmlFor="dupla" className="mt-4 block text-sm text-white/70">Consultar por dupla</label>
       <select id="dupla" value={pair} onChange={(event) => setPair(event.target.value as MentorPair | "")}
-        className="mt-1 w-full rounded-lg border border-white/25 bg-[#171719] px-3 py-2 text-sm text-white scheme-dark focus-visible:outline-2 focus-visible:outline-offset-2">
+        className="mt-1 w-full max-md:min-h-12 pointer-coarse:min-h-12 rounded-lg border border-white/25 bg-[#171719] px-3 py-2 text-sm text-white scheme-dark focus-visible:outline-2 focus-visible:outline-offset-2">
         <option value="">Todas as duplas</option>
         {pairs.map((key) => <option key={key} value={key}>{mentorPairs[key]}</option>)}
       </select>
