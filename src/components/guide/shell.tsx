@@ -24,6 +24,9 @@ const staffLinks = [
 
 function GuideHeader({ staff }: { staff: boolean }) {
   const path = usePathname();
+  const links = staff
+    ? staffLinks.filter(({ href }) => href === "/guia" || href === path)
+    : participantLinks;
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, PROGRESS.spring);
 
@@ -38,7 +41,7 @@ function GuideHeader({ staff }: { staff: boolean }) {
         </Link>
         <nav aria-label={staff ? "Guias do evento" : "Guia do participante"} className="flex flex-1 sm:flex-none">
           <ul className="flex w-full items-center justify-between gap-0.5 sm:justify-end sm:gap-1">
-            {(staff ? staffLinks : participantLinks).map((p) => {
+            {links.map((p) => {
               const active = path === p.href;
               return (
                 <li key={p.href}>
