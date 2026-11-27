@@ -1,3 +1,5 @@
+import { rounds } from "@/guide/mentoria";
+
 // Single source of truth for event copy — every variant reads from here.
 
 export const EVENT = {
@@ -50,15 +52,35 @@ export const PRIZES = [
   },
 ];
 
-export const SCHEDULE = [
-  { t: "08:00", what: "Credenciamento e café", where: "Entrada" },
-  { t: "09:00", what: "Abertura", where: "Auditório" },
-  { t: "09:30", what: "Hacking", where: "Pátio e salas" },
-  { t: "12:30", what: "Almoço", where: "Cantina" },
-  { t: "16:30", what: "Pitches", where: "Auditório" },
-  { t: "17:30", what: "Júri e prêmios", where: "Auditório" },
-  { t: "18:00", what: "Encerramento", where: "Auditório" },
-];
+function eventSchedule(opening: string, pitchTime: string) {
+  return [
+    { t: "08:00", what: "Credenciamento e café", where: "Entrada" },
+    { t: "09:00", what: opening, where: "Auditório" },
+    { t: "09:30", what: "Hacking", where: "Pátio e salas" },
+    { t: "12:30", what: "Almoço", where: "Cantina" },
+    { t: pitchTime, what: "Pitches", where: "Auditório" },
+    { t: "17:30", what: "Júri e prêmios", where: "Auditório" },
+    { t: "18:00", what: "Encerramento", where: "Auditório" },
+  ];
+}
+
+export const SCHEDULE = eventSchedule("Abertura", "16:30");
+const visitMinutes = 10;
+const mentorshipEvents = rounds.flatMap(({ period, slots }) => {
+  const [hour, minute] = slots[slots.length - 1].time.split(":").map(Number);
+  const endMinutes = hour * 60 + minute + visitMinutes;
+  const endTime = [Math.floor(endMinutes / 60), endMinutes % 60]
+    .map((part) => String(part).padStart(2, "0"))
+    .join(":");
+  const label = `das mentorias da ${period.toLowerCase()}`;
+  return [
+    { t: slots[0].time, what: `Início ${label}`, where: "Mesas dos grupos" },
+    { t: endTime, what: `Fim ${label}`, where: "Mesas dos grupos" },
+  ];
+});
+
+export const STAFF_SCHEDULE = [...eventSchedule("Abertura e tema", "17:00"), ...mentorshipEvents]
+  .sort((a, b) => a.t.localeCompare(b.t));
 
 export const FIELDS = [
   "Software",

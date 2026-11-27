@@ -15,9 +15,18 @@ const PROGRESS = {
   spring: { stiffness: 260, damping: 40, restDelta: 0.001 }, // reading hairline
 };
 
-/** Sticky top bar shared by the three guide screens: home link, the three tabs, reading progress. */
-function GuideHeader() {
+const participantLinks = PAGE_ORDER.map((key) => PAGES[key]);
+const staffLinks = [
+  { href: "/guia", label: "Participante" },
+  { href: "/mentor", label: "Mentor" },
+  { href: "/jurados", label: "Jurados" },
+];
+
+function GuideHeader({ staff }: { staff: boolean }) {
   const path = usePathname();
+  const links = staff
+    ? staffLinks.filter(({ href }) => href === "/guia" || href === path)
+    : participantLinks;
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, PROGRESS.spring);
 
@@ -30,13 +39,12 @@ function GuideHeader() {
         >
           Hack IA Brasil
         </Link>
-        <nav aria-label="Guia do participante" className="flex flex-1 sm:flex-none">
+        <nav aria-label={staff ? "Guias do evento" : "Guia do participante"} className="flex flex-1 sm:flex-none">
           <ul className="flex w-full items-center justify-between gap-0.5 sm:justify-end sm:gap-1">
-            {PAGE_ORDER.map((k) => {
-              const p = PAGES[k];
+            {links.map((p) => {
               const active = path === p.href;
               return (
-                <li key={k}>
+                <li key={p.href}>
                   <Link
                     href={p.href}
                     aria-current={active ? "page" : undefined}
@@ -68,13 +76,13 @@ function GuideHeader() {
   );
 }
 
-export function GuideShell({ children }: { children: ReactNode }) {
+export function GuideShell({ children, staff = false }: { children: ReactNode; staff?: boolean }) {
   return (
     // reducedMotion="user": with prefers-reduced-motion, motion drops transforms and keeps fades
     <MotionConfig reducedMotion="user">
       <div className="min-h-dvh bg-black font-light text-white selection:bg-white selection:text-[#000928]">
         <ClickDots />
-        <GuideHeader />
+        <GuideHeader staff={staff} />
         <div className="relative z-10">{children}</div>
         <GuideFooter />
       </div>
