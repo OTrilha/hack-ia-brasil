@@ -57,7 +57,7 @@ function Scorecard() {
         ))}
       </dl>
       <p className="border-t border-white/15 pt-4 text-sm leading-relaxed text-white/70">
-        Use notas decimais, como 4,85. Carol definirá os pesos.
+        Use notas decimais, como 4,85.
       </p>
     </section>
   );
