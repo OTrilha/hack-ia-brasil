@@ -1055,7 +1055,7 @@ export const GUIDE: Section[] = [
               "b": true
             },
             {
-              "t": " Descreva os 60 segundos de demo que vocês querem apresentar às 16h30."
+              "t": " Descreva os 60 segundos de demo que vocês querem apresentar às 17h."
             }
           ],
           [
@@ -1203,7 +1203,7 @@ export const GUIDE: Section[] = [
           [
             [
               {
-                "t": "🎤 16h30"
+                "t": "🎤 17h00"
               }
             ],
             [
@@ -1215,7 +1215,7 @@ export const GUIDE: Section[] = [
           [
             [
               {
-                "t": "🏆 17h30"
+                "t": "🏆 17h40"
               }
             ],
             [
