@@ -23,9 +23,9 @@ const situations = [
 ];
 
 const tracks = [
-  { name: "Segurança", example: "A Minds Digital usa a voz para verificar a identidade de quem liga. Como distinguir uma tentativa de golpe de uma ligação legítima?" },
-  { name: "Saúde", example: "A Laura alerta a equipe quando um paciente corre risco. Que informação ajudaria a equipe a agir a tempo?" },
-  { name: "Educação", example: "A Letrus dá feedback de redação. O aluno consegue usar a sugestão para melhorar o próprio texto?" },
+  { name: "Segurança", example: "A Pax cruza boletins de ocorrência e imagens de câmeras para sugerir pistas de investigação. Como um investigador confere de onde veio cada pista?" },
+  { name: "Saúde", example: "A Telepatia transforma a conversa da consulta em um rascunho de prontuário. O que o médico precisa conferir antes de assinar?" },
+  { name: "Educação", example: "A Teachy ajuda professores a preparar aulas e exercícios com IA. O que uma professora precisaria saber sobre a atividade para decidir se ela serve para a sua turma?" },
 ];
 
 export default function MentorPage() {
