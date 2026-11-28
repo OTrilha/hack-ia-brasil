@@ -1,7 +1,7 @@
 export const mentorPairs = {
   felipe: "Felipe Duarte e Puca",
-  tiago: "Tiago Trindade e Emyle Lucena",
-  eric: "Eric Barreto e Beatriz Pessoa",
+  tiago: "Tiago Trindade e Beatriz Pessoa",
+  eric: "Eric Barreto e Emyle Lucena",
   gabriel: "Gabriel Ayres e Gabriel Carvalho",
   luigi: "Luigi Schmitt e Daniel Brandão",
 } as const;
