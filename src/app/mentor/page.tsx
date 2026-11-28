@@ -9,16 +9,16 @@ export const metadata = roleGuideMetadata(
 
 const steps = [
   {
-    title: "Entenda onde o time travou",
-    body: "Como nas mentorias do Trilha, ouça antes de sugerir. Se a dificuldade for definir o problema, peça um caso concreto. Quem passou por isso? O que aconteceu, o que causou o problema e qual foi a consequência?",
+    title: "Quando esse problema aconteceu de verdade?",
+    body: "Peça um exemplo de alguém que usaria o projeto. Como essa pessoa resolve isso hoje? Em que parte ela perde tempo ou precisa de ajuda? Dê espaço para o time explicar o que quer mudar.",
   },
   {
-    title: "Olhem juntos para o que já existe",
-    body: "Se a trava for técnica, peça para ver onde o fluxo falha e o que já tentaram. Se for falta de tempo, pergunte qual parte precisa funcionar para que alguém entenda a ideia na demo.",
+    title: "Vocês me mostram uma tentativa?",
+    body: "Vale um rascunho, uma resposta da IA ou um trecho da demo. Peça ao time que mostre o que esperava ver e o que aconteceu de fato. Que pista isso dá sobre a dificuldade que eles trouxeram?",
   },
   {
-    title: "Deixe o próximo teste com a equipe",
-    body: "Pergunte qual teste o time quer fazer agora e como vai saber se deu certo. Anote o grupo, a dificuldade e o teste combinado no grupo dos mentores. Isso ajuda a próxima dupla a retomar a conversa.",
+    title: "Que teste cabe antes da entrega?",
+    body: "Deixe a equipe escolher uma coisa para testar. Pergunte que resultado faria o time seguir com a ideia ou mudar de caminho. Ao sair, compartilhe a dúvida, o teste e o número da mesa no grupo dos mentores.",
   },
 ];
 
