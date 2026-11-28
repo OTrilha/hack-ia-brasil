@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GuideBlock, RoleGuide, StepList, roleGuideMetadata } from "@/components/guide/role-guide";
+import { GuideBlock, RoleGuide, roleGuideMetadata } from "@/components/guide/role-guide";
 import { MentorSchedule } from "@/components/guide/mentor-schedule";
 
 export const metadata = roleGuideMetadata(
@@ -7,18 +7,18 @@ export const metadata = roleGuideMetadata(
   "Horários das rodadas, perguntas para os times e referências para a mentoria.",
 );
 
-const steps = [
+const situations = [
   {
-    title: "Entenda onde o time travou",
-    body: "Como nas mentorias do Trilha, ouça antes de sugerir. Se a dificuldade for definir o problema, peça um caso concreto. Quem passou por isso? O que aconteceu, o que causou o problema e qual foi a consequência?",
+    title: "Quando o time explica a solução, mas a dor ainda está vaga",
+    body: "Se alguém disser “queremos criar um tutor com IA”, peça uma cena: “Me conta de um aluno que precisaria disso. Em que momento ele travou? O que aconteceu depois?” A partir do exemplo, ajude o time a distinguir o problema, a causa e a consequência.",
   },
   {
-    title: "Olhem juntos para o que já existe",
-    body: "Se a trava for técnica, peça para ver onde o fluxo falha e o que já tentaram. Se for falta de tempo, pergunte qual parte precisa funcionar para que alguém entenda a ideia na demo.",
+    title: "Quando o time está dividido entre duas ideias",
+    body: "Dê espaço para os dois lados. “O que fez vocês considerarem cada caminho? O que precisaríamos saber para escolher entre eles?” Às vezes, a melhor ajuda é o time perceber que a discordância inteira gira em torno de uma dúvida que dá para investigar hoje.",
   },
   {
-    title: "Deixe o próximo teste com a equipe",
-    body: "Pergunte qual teste o time quer fazer agora e como vai saber se deu certo. Anote o grupo, a dificuldade e o teste combinado no grupo dos mentores. Isso ajuda a próxima dupla a retomar a conversa.",
+    title: "Quando o time quer construir mais do que cabe no dia",
+    body: "Peça que imaginem a cena principal da demo: “Alguém abre o produto, faz o quê e sai com qual resultado?” Com essa cena em mente, deixe a equipe decidir o que precisa funcionar até o pitch e o que pode esperar.",
   },
 ];
 
@@ -55,7 +55,20 @@ export default function MentorPage() {
       }
     >
       <GuideBlock title="A conversa de 10 minutos">
-        <StepList steps={steps} />
+        <p className="mb-5 text-base leading-relaxed text-white/80">
+          Depois de ouvir a maior dificuldade do time, escolha uma destas conversas para a mesa.
+        </p>
+        <ul className="grid gap-5">
+          {situations.map(({ title, body }) => (
+            <li key={title}>
+              <h3 className="text-lg font-medium leading-snug">{title}</h3>
+              <p className="mt-1 max-w-prose text-[15px] leading-relaxed text-white/70">{body}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-5 text-sm leading-relaxed text-white/70">
+          Ao sair, compartilhe o número da mesa, a dificuldade e o próximo passo no grupo dos mentores.
+        </p>
       </GuideBlock>
       <GuideBlock title="Fellowship e tracks">
         <p className="max-w-[65ch] text-base leading-relaxed text-white/75">
