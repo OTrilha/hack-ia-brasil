@@ -52,19 +52,22 @@ export const PRIZES = [
   },
 ];
 
-function eventSchedule(opening: string, pitchTime: string) {
+const pitchTime = "17:00";
+const awardsTime = "17:40";
+
+function eventSchedule(opening: string) {
   return [
     { t: "08:00", what: "Credenciamento e café", where: "Entrada" },
     { t: "09:00", what: opening, where: "Auditório" },
     { t: "09:30", what: "Hacking", where: "Pátio e salas" },
     { t: "12:30", what: "Almoço", where: "Cantina" },
     { t: pitchTime, what: "Pitches", where: "Auditório" },
-    { t: "17:30", what: "Júri e prêmios", where: "Auditório" },
+    { t: awardsTime, what: "Júri e prêmios", where: "Auditório" },
     { t: "18:00", what: "Encerramento", where: "Auditório" },
   ];
 }
 
-export const SCHEDULE = eventSchedule("Abertura", "16:30");
+export const SCHEDULE = eventSchedule("Abertura");
 const visitMinutes = 10;
 const mentorshipEvents = rounds.flatMap(({ period, slots }) => {
   const [hour, minute] = slots[slots.length - 1].time.split(":").map(Number);
@@ -79,7 +82,7 @@ const mentorshipEvents = rounds.flatMap(({ period, slots }) => {
   ];
 });
 
-export const STAFF_SCHEDULE = [...eventSchedule("Abertura e tema", "17:00"), ...mentorshipEvents]
+export const STAFF_SCHEDULE = [...eventSchedule("Abertura e tema"), ...mentorshipEvents]
   .sort((a, b) => a.t.localeCompare(b.t));
 
 export const FIELDS = [
@@ -159,8 +162,8 @@ export const SCHEDULE_EN = [
   { t: "09:00", what: "Opening", where: "Auditorium" },
   { t: "09:30", what: "Hacking", where: "Courtyard and rooms" },
   { t: "12:30", what: "Lunch", where: "Cafeteria" },
-  { t: "16:30", what: "Pitches", where: "Auditorium" },
-  { t: "17:30", what: "Judging and awards", where: "Auditorium" },
+  { t: pitchTime, what: "Pitches", where: "Auditorium" },
+  { t: awardsTime, what: "Judging and awards", where: "Auditorium" },
   { t: "18:00", what: "Closing", where: "Auditorium" },
 ];
 
