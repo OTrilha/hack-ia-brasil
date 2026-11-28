@@ -9,16 +9,16 @@ export const metadata = roleGuideMetadata(
 
 const steps = [
   {
-    title: "Ouça o time",
-    body: "Como nas mentorias do Trilha, comece com uma pergunta. Quem vive esse problema? Como vocês descobriram a causa?",
+    title: "Entenda onde o time travou",
+    body: "Como nas mentorias do Trilha, ouça antes de sugerir. Se a dificuldade for definir o problema, peça um caso concreto. Quem passou por isso? O que aconteceu, o que causou o problema e qual foi a consequência?",
   },
   {
-    title: "Peça para ver",
-    body: "O que já funciona? O que vocês conseguem testar hoje? Deixe o time escolher o próximo passo.",
+    title: "Olhem juntos para o que já existe",
+    body: "Se a trava for técnica, peça para ver onde o fluxo falha e o que já tentaram. Se for falta de tempo, pergunte qual parte precisa funcionar para que alguém entenda a ideia na demo.",
   },
   {
-    title: "Anote e circule",
-    body: "Envie o nome do grupo, o que ele testou e a dúvida que ficou no grupo dos mentores. Divida seu tempo entre as equipes.",
+    title: "Deixe o próximo teste com a equipe",
+    body: "Pergunte qual teste o time quer fazer agora e como vai saber se deu certo. Anote o grupo, a dificuldade e o teste combinado no grupo dos mentores. Isso ajuda a próxima dupla a retomar a conversa.",
   },
 ];
 
@@ -32,16 +32,30 @@ export default function MentorPage() {
   return (
     <RoleGuide
       role="mentor"
-      title="Como conduzir a mentoria"
-      lead="Até cinco mesas recebem mentoria ao mesmo tempo, com uma dupla por mesa. Cada grupo tem 10 minutos de manhã e mais 10 com outra dupla à tarde."
-      feature={<MentorSchedule />}
+      title="Qual é a maior dificuldade de vocês agora?"
+      lead="Comece cada visita com essa pergunta. Dê tempo para a equipe responder e peça que mostre o que já tentou. Use o que ouvir para ajudar o time a escolher o próximo passo."
+      feature={
+        <>
+          <section aria-labelledby="dinamica-da-mentoria" className="mb-6">
+            <h2 id="dinamica-da-mentoria" className="text-2xl font-light tracking-tight">Como funcionam as rodadas</h2>
+            <div className="mt-3 space-y-3 text-[15px] leading-relaxed text-white/80">
+              <p>
+                São duas rodadas fixas. De manhã, das <strong>10h30 às 11h20</strong>, vá com sua dupla às mesas indicadas na escala. Vocês têm dez minutos com cada equipe. Até cinco mesas recebem mentoria ao mesmo tempo.
+              </p>
+              <p>
+                À tarde, das <strong>14h às 14h50</strong>, você continua com sua dupla e visita outros grupos. Cada equipe recebe duas duplas diferentes no dia. Quem foi atendido primeiro de manhã fica para o fim da tarde.
+              </p>
+              <p>
+                <strong>Fora das rodadas, qualquer equipe pode chamar você</strong>, mesmo antes da primeira visita. Até as <strong>16h30</strong>, procure circular quando estiver disponível. Use dez minutos como referência para dar atenção a outras mesas e fazer suas pausas.
+              </p>
+            </div>
+          </section>
+          <MentorSchedule />
+        </>
+      }
     >
       <GuideBlock title="A conversa de 10 minutos">
         <StepList steps={steps} />
-        <p className="mt-5 text-sm leading-relaxed text-white/70">
-          As equipes podem procurar você antes da primeira rodada e até <strong className="font-medium text-white">16h30</strong>.
-          Fora da escala, use os mesmos dez minutos como referência e faça suas pausas.
-        </p>
       </GuideBlock>
       <GuideBlock title="Fellowship e tracks">
         <p className="max-w-[65ch] text-base leading-relaxed text-white/75">
